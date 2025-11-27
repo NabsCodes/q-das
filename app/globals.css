@@ -1,41 +1,34 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap');
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/**
+ * DESIGN SYSTEM APPROACH
+ * 
+ * We use a hybrid approach:
+ * 1. Brand colors in @theme → For raw Tailwind utilities (blue-600, etc.)
+ * 2. Semantic tokens in :root → For shadcn components (primary, secondary, etc.)
+ * 
+ * This gives us:
+ * - Brand consistency: All shadcn components use your brand blue
+ * - Flexibility: Can still use raw Tailwind colors for marketing pages
+ * - Maintainability: Change brand color in one place, affects everything
+ * 
+ * Usage:
+ * - Shadcn components: Use semantic tokens (bg-primary, text-primary-foreground)
+ * - Marketing/landing: Use raw Tailwind (bg-blue-600, text-blue-900)
+ */
 
 @theme inline {
-  /* Brand Color System */
-  --color-primary-50: #eff6ff;
-  --color-primary-100: #dbeafe;
-  --color-primary-200: #bfdbfe;
-  --color-primary-300: #93c5fd;
-  --color-primary-400: #60a5fa;
-  --color-primary-500: #3b82f6;
-  --color-primary-600: #2563eb;
-  --color-primary-700: #1d4ed8;
-  --color-primary-800: #1e40af;
-  --color-primary-900: #1e3a8a;
-
-  --color-accent-50: #fef3c7;
-  --color-accent-100: #fde68a;
-  --color-accent-200: #fcd34d;
-  --color-accent-300: #fbbf24;
-  --color-accent-400: #f59e0b;
-  --color-accent-500: #d97706;
-  --color-accent-600: #b45309;
-
-  --color-dark-50: #f8fafc;
-  --color-dark-100: #f1f5f9;
-  --color-dark-200: #e2e8f0;
-  --color-dark-300: #cbd5e1;
-  --color-dark-400: #94a3b8;
-  --color-dark-500: #64748b;
-  --color-dark-600: #475569;
-  --color-dark-700: #334155;
-  --color-dark-800: #1e293b;
-  --color-dark-900: #0f172a;
+  /* Brand Color System - For raw Tailwind utilities */
+  --color-primary: #006fd1; /* Primary brand blue */
+  --color-primary-light: #ddefff; /* Light blue background */
+  --color-accent: #eae2ff; /* Light purple/lavender accent */
 
   /* Typography */
-  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
-  --font-body: 'Outfit', system-ui, sans-serif;
+  --font-display: "Montserrat", system-ui, sans-serif;
+  --font-body: "Montserrat", system-ui, sans-serif;
 }
 
 * {
@@ -44,125 +37,112 @@
 }
 
 body {
-  @apply bg-white text-dark-900;
+  @apply bg-white text-blue-900;
   font-family: var(--font-body);
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display);
+:root {
+  --radius: 0.625rem;
+  /* Base colors */
+  --background: oklch(1 0 0); /* White */
+  --foreground: oklch(0.145 0 0); /* Near black */
+  --card: oklch(1 0 0); /* White */
+  --card-foreground: oklch(0.145 0 0); /* Near black */
+  --popover: oklch(1 0 0); /* White */
+  --popover-foreground: oklch(0.145 0 0); /* Near black */
+
+  /* Brand Primary - Your blue (#006fd1) mapped to semantic token */
+  --primary: oklch(0.52 0.18 250); /* #006fd1 - Your brand blue */
+  --primary-foreground: oklch(0.985 0 0); /* White text on blue */
+
+  /* Secondary - Light blue (#DDEFFF) for secondary actions */
+  --secondary: oklch(0.96 0.03 240); /* #DDEFFF - Light blue */
+  --secondary-foreground: oklch(0.52 0.18 250); /* Brand blue text */
+
+  /* Muted - Subtle backgrounds using light blue */
+  --muted: oklch(0.96 0.03 240); /* #DDEFFF - Very light blue-gray */
+  --muted-foreground: oklch(0.45 0.01 250); /* Medium gray-blue */
+
+  /* Accent - Light purple/lavender (#EAE2FF) for highlights */
+  --accent: oklch(0.95 0.05 280); /* #EAE2FF - Light purple accent */
+  --accent-foreground: oklch(0.52 0.18 250); /* Brand blue text */
+
+  /* Destructive - Red for errors */
+  --destructive: oklch(0.577 0.245 27.325); /* Red */
+  --destructive-foreground: oklch(0.985 0 0); /* White */
+
+  /* Borders and inputs */
+  --border: oklch(0.9 0.01 250); /* Light blue-gray border */
+  --input: oklch(0.9 0.01 250); /* Light blue-gray input border */
+  --ring: oklch(0.52 0.18 250); /* Brand blue focus ring */
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
+.dark {
+  /* Dark mode base colors */
+  --background: oklch(0.145 0 0); /* Dark background */
+  --foreground: oklch(0.985 0 0); /* Light text */
+  --card: oklch(0.205 0 0); /* Dark card */
+  --card-foreground: oklch(0.985 0 0); /* Light text */
+  --popover: oklch(0.205 0 0); /* Dark popover */
+  --popover-foreground: oklch(0.985 0 0); /* Light text */
+
+  /* Dark mode primary - Lighter blue for dark backgrounds */
+  --primary: oklch(0.65 0.18 250); /* Lighter brand blue */
+  --primary-foreground: oklch(0.145 0 0); /* Dark text on blue */
+
+  /* Dark mode secondary */
+  --secondary: oklch(0.269 0 0); /* Dark gray */
+  --secondary-foreground: oklch(0.985 0 0); /* Light text */
+
+  /* Dark mode muted */
+  --muted: oklch(0.269 0 0); /* Dark gray */
+  --muted-foreground: oklch(0.708 0 0); /* Medium gray text */
+
+  /* Dark mode accent - Darker lavender */
+  --accent: oklch(0.35 0.05 280); /* Darker purple/lavender */
+  --accent-foreground: oklch(0.985 0 0); /* Light text */
+
+  /* Dark mode destructive */
+  --destructive: oklch(0.704 0.191 22.216); /* Red */
+  --destructive-foreground: oklch(0.985 0 0); /* Light text */
+
+  /* Dark mode borders */
+  --border: oklch(1 0 0 / 10%); /* Subtle white border */
+  --input: oklch(1 0 0 / 15%); /* Subtle white input border */
+  --ring: oklch(0.65 0.18 250); /* Lighter brand blue focus ring */
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
 }
 
-::-webkit-scrollbar-track {
-  background: #f1f5f9;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
-
-/* Smooth scroll */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
+@layer base {
+  * {
+    @apply border-blue-200;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  body {
+    @apply bg-white text-blue-900;
   }
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.animate-fade-in-up {
-  animation: fadeInUp 0.6s ease-out forwards;
-}
-
-.animate-slide-in-right {
-  animation: slideInRight 0.6s ease-out forwards;
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-.animate-scale-in {
-  animation: scaleIn 0.5s ease-out forwards;
-}
-
-/* Stagger animation delays */
-.stagger-1 { animation-delay: 0.1s; }
-.stagger-2 { animation-delay: 0.2s; }
-.stagger-3 { animation-delay: 0.3s; }
-.stagger-4 { animation-delay: 0.4s; }
-.stagger-5 { animation-delay: 0.5s; }
-.stagger-6 { animation-delay: 0.6s; }
-
-/* Gradient text */
-.gradient-text {
-  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Glass effect */
-.glass {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-/* Glow effect */
-.glow {
-  box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
-}
-
-.glow-hover:hover {
-  box-shadow: 0 0 30px rgba(37, 99, 235, 0.5);
-  transition: box-shadow 0.3s ease;
 }
