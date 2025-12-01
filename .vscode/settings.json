@@ -6,5 +6,6 @@
     "typescript",
     "typescriptreact"
   ],
-  "eslint.runtime": "node"
+  "eslint.runtime": "node",
+  "cSpell.words": ["Adebayo", "Greentech", "Ololade"]
 }

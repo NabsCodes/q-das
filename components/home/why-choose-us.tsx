@@ -1,37 +1,41 @@
 "use client";
 
 import { motion } from "motion/react";
-import { HiStar, HiCube, HiUser, HiTrendingUp, HiPhone } from "react-icons/hi";
+import { Icon } from "@iconify/react";
 import { SectionBadge } from "@/components/section-badge";
 import { FeatureCard } from "@/components/shared/feature-card";
+import { HiStar } from "react-icons/hi";
 
 type Feature = {
-  icon: React.ComponentType<{ className?: string }>;
+  icon: React.ComponentType<{
+    className?: string;
+    style?: React.CSSProperties;
+  }>;
   title: string;
   description: string;
 };
 
 const features: Feature[] = [
   {
-    icon: HiCube,
+    icon: (props) => <Icon icon="ph:cube-fill" {...props} />,
     title: "Innovation First",
     description:
       "We harness the power of modern technologies—AI, IoT, blockchain, and data analytics—to keep you competitive in a digital-first world.",
   },
   {
-    icon: HiUser,
+    icon: (props) => <Icon icon="ph:user-fill" {...props} />,
     title: "Client-Centric Approach",
     description:
       "Your goals drive our solutions. We listen, design, and deliver based on your unique challenges and ambitions.",
   },
   {
-    icon: HiTrendingUp,
+    icon: (props) => <Icon icon="ph:chart-line-up-fill" {...props} />,
     title: "Scalable Solutions",
     description:
       "From startups to enterprises, our modular service offerings grow with your business.",
   },
   {
-    icon: HiPhone,
+    icon: (props) => <Icon icon="ph:headset-fill" {...props} />,
     title: "24/7 Support & Reliability",
     description:
       "Round-the-clock service desks, proactive monitoring, and SLA-backed support give you peace of mind.",

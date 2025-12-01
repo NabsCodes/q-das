@@ -42,7 +42,7 @@ export default function Footer() {
       </div>
 
       {/* Footer Content */}
-      <div className="relative z-10 container mx-auto px-6 pt-16 pb-20 md:px-12 md:pb-60">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 pt-16 pb-20 md:px-6 md:pb-60">
         <div className="flex flex-col items-center justify-between gap-10 md:flex-row md:items-start">
           {/* Left: Logo */}
           <div className="flex shrink-0 items-center">
@@ -80,7 +80,7 @@ export default function Footer() {
                 </Link>
               ))}
             </nav>
-            <p className="text-xs text-gray-500 md:text-sm">
+            <p className="text-xs text-gray-400 md:text-sm">
               Copyright {currentYear} Q-das Global Group
             </p>
           </div>
@@ -93,7 +93,7 @@ export default function Footer() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-400 transition-colors hover:text-white"
+                className="text-gray-300 transition-colors hover:text-white"
                 aria-label={social.name}
               >
                 <social.icon className="h-5 w-5 md:h-6 md:w-6" />
