@@ -3,6 +3,7 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
+import { Toaster } from "@/components/ui/sonner";
 
 const montserrat = Montserrat({
   variable: "--font-display",
@@ -36,6 +37,7 @@ export default function RootLayout({
         {/* Main content */}
         {children}
         <Footer />
+        <Toaster />
       </body>
     </html>
   );

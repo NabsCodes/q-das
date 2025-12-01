@@ -2,51 +2,51 @@
 
 import { motion } from "motion/react";
 import { HiQuestionMarkCircle } from "react-icons/hi";
-import { SectionBadge } from "@/components/section-badge";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { SectionBadge } from "@/components/section-badge";
 
 const faqs = [
   {
-    question: "What is Q-DAS?",
+    question: "Who is Q-DAS Global?",
     answer:
-      "QDAS GLOBAL TECHNOLOGY NIG. LTD was registered on the 20th December 2011, offering solutions and services on information, communication and technology (ICT), building and contractors for construction work, manufacturing, assembling, importing, exporting and supply of electronic, electrical apparatus and equipments, general contractor, import, export and general supply of goods and services.",
+      "Q-DAS Global is a premier technology solutions provider established in 2011. We specialize in delivering cutting-edge ICT infrastructure, custom software development, and enterprise-grade engineering solutions for government and private sectors.",
   },
   {
-    question: "What services does Q-DAS Global offer?",
+    question: "What specific services do you offer?",
     answer:
-      "We offer a comprehensive range of IT services including Software & Application Development, Managed IT Services, Infrastructure Solutions, IT Consulting, Training & Capacity Building, and Professional Support & ICT Maintenance.",
+      "We provide a holistic suite of digital services including Custom Software & App Development, Cloud Infrastructure & DevOps, Cybersecurity Audits, IT Consulting, and specialized Technical Training. We build the systems that power modern businesses.",
   },
   {
-    question: "How can I contact Q-DAS Global?",
+    question: "How do we engage with Q-DAS for a project?",
     answer:
-      "You can reach us via email at info@qdasglobal.com, call us at +234 802789 1614, or visit our office at No 10 Sequela Street, Wuse II, Abuja, Nigeria. Our business hours are Monday-Friday: 9am to 5pm, Saturday: 11am to 3pm.",
+      "Starting is simple. Reach out to our team via info@qdasglobal.com or call +234 802 789 1614. We'll schedule an initial consultation to understand your objectives and propose a tailored roadmap for your digital transformation.",
   },
   {
-    question: "Does Q-DAS Global provide 24/7 support?",
+    question: "Do you provide ongoing support after launch?",
     answer:
-      "Yes, we offer round-the-clock service desks, proactive monitoring, and SLA-backed support to ensure your technology infrastructure runs efficiently at all times.",
+      "Absolutely. We believe in long-term partnerships. Our team offers 24/7 service desk support, proactive system monitoring, and SLA-backed maintenance to ensure your infrastructure operates at peak performance continuously.",
   },
   {
-    question: "What industries does Q-DAS Global serve?",
+    question: "Which industries do you specialize in?",
     answer:
-      "We serve various industries including government agencies, financial institutions, healthcare, education, and private enterprises across Nigeria and beyond.",
+      "Our expertise spans critical sectors including Government & Public Sector, Banking & Finance, Healthcare, Education, and Manufacturing. We understand the unique compliance and operational challenges of these industries.",
   },
   {
-    question: "How does Q-DAS Global ensure data security?",
+    question: "How do you handle data security and compliance?",
     answer:
-      "We implement comprehensive security measures including SOC monitoring, threat detection, compliance frameworks, and regular security audits to protect your data and infrastructure.",
+      "Security is embedded in our DNA. We adhere to strict global standards for data protection, employing advanced threat detection, regular security audits, and compliance frameworks to safeguard your sensitive information.",
   },
 ];
 
 export function FAQ() {
   return (
-    <section className="px-4 py-24 lg:py-32">
-      <div className="container mx-auto">
+    <section className="relative overflow-hidden bg-gray-50 py-24 lg:py-32">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-6">
         <div className="mx-auto mb-16 max-w-4xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -55,7 +55,9 @@ export function FAQ() {
             transition={{ duration: 0.6 }}
             className="mb-6 inline-block"
           >
-            <SectionBadge icon={HiQuestionMarkCircle}>FAQ</SectionBadge>
+            <SectionBadge icon={HiQuestionMarkCircle}>
+              Frequently Asked Questions
+            </SectionBadge>
           </motion.div>
 
           <motion.h2
@@ -63,9 +65,9 @@ export function FAQ() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-display mb-6 text-4xl leading-tight font-bold text-gray-900 lg:text-5xl"
+            className="font-display mb-6 text-3xl leading-tight font-bold text-gray-900 md:text-4xl lg:text-5xl"
           >
-            Answers To Questions You Might Have
+            Answers to your questions
           </motion.h2>
 
           <motion.p
@@ -73,10 +75,10 @@ export function FAQ() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg leading-relaxed text-gray-600 lg:text-xl"
+            className="text-lg leading-relaxed text-gray-600"
           >
-            We keep things simple. Here is what most of our clients ask before
-            getting started.
+            Everything you need to know about our services, process, and how we
+            deliver value to your organization.
           </motion.p>
         </div>
 
@@ -87,17 +89,19 @@ export function FAQ() {
                 key={faq.question}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
+                viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <AccordionItem
                   value={`item-${index}`}
-                  className="hover:border-primary/50 rounded-lg border border-gray-200 bg-white px-6 transition-all"
+                  className="group data-[state=open]:border-primary/20 bg-primary-light/50 overflow-hidden rounded-[20px] border border-transparent transition-all duration-300 data-[state=open]:bg-white"
                 >
-                  <AccordionTrigger className="text-left font-semibold text-gray-900 hover:no-underline">
-                    {faq.question}
+                  <AccordionTrigger className="px-6 text-left hover:no-underline md:px-8">
+                    <span className="font-display group-data-[state=open]:text-primary mr-4 text-lg font-semibold text-gray-900 transition-colors">
+                      {faq.question}
+                    </span>
                   </AccordionTrigger>
-                  <AccordionContent className="text-gray-600">
+                  <AccordionContent className="px-6 pb-6 text-base leading-relaxed text-gray-600 md:px-8">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
