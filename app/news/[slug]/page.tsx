@@ -1,16 +1,27 @@
 import { newsArticles } from "@/lib/data/news";
-import { PageHeader } from "@/components/shared/page-header";
 import { ContactSection } from "@/components/shared/contact-section";
-import { HiArrowLeft, HiCalendar, HiUser } from "react-icons/hi";
+import { ArticleContent } from "@/components/news/article-content";
+import {
+  HiArrowLeft,
+  HiOutlineCalendar,
+  HiOutlineUser,
+  HiOutlineClock,
+  HiLink,
+  HiArrowRight,
+} from "react-icons/hi";
+import { FaLinkedin, FaFacebook } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface NewsDetailProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
@@ -22,7 +33,8 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: NewsDetailProps): Promise<Metadata> {
-  const article = newsArticles.find((a) => a.slug === params.slug);
+  const { slug } = await params;
+  const article = newsArticles.find((a) => a.slug === slug);
   if (!article)
     return {
       title: "Article Not Found | Q-DAS Global",
@@ -47,8 +59,9 @@ export async function generateMetadata({
   };
 }
 
-export default function NewsDetailPage({ params }: NewsDetailProps) {
-  const article = newsArticles.find((a) => a.slug === params.slug);
+export default async function NewsDetailPage({ params }: NewsDetailProps) {
+  const { slug } = await params;
+  const article = newsArticles.find((a) => a.slug === slug);
 
   if (!article) {
     notFound();
@@ -59,89 +72,209 @@ export default function NewsDetailPage({ params }: NewsDetailProps) {
     .slice(0, 3);
 
   return (
-    <main className="flex-1">
-      <PageHeader
-        badge={article.category}
-        title={article.title}
-        description=""
-      />
-
-      <section className="pb-16 lg:pb-24">
-        <div className="mx-auto max-w-4xl px-4 md:px-6">
-          {/* Article Meta */}
-          <div className="mb-8 flex flex-wrap items-center gap-6 text-sm text-gray-500 md:mb-12">
-            <div className="flex items-center gap-2">
-              <HiCalendar className="text-primary h-5 w-5" />
-              <span>{article.date}</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <HiUser className="text-primary h-5 w-5" />
-              <span>{article.author}</span>
-            </div>
-          </div>
-
-          {/* Hero Image */}
-          <div className="relative mb-12 aspect-video w-full overflow-hidden rounded-[32px] shadow-xl md:mb-16">
-            <Image
-              src={article.image}
-              alt={article.title}
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
-
-          {/* Content */}
-          <article
-            className="prose prose-lg prose-blue mx-auto max-w-none text-gray-600"
-            dangerouslySetInnerHTML={{ __html: article.content }}
-          />
-
-          {/* Share / Back */}
-          <div className="mt-16 border-t border-gray-100 pt-8">
+    <main className="min-h-screen bg-white pt-28 pb-16">
+      <article className="pb-14 lg:pb-16">
+        <div className="mx-auto max-w-7xl px-4 md:px-6">
+          {/* Back Link (Breadcrumb style) */}
+          <div className="mb-4 md:mb-8">
             <Link
               href="/news"
-              className="group hover:text-primary inline-flex items-center gap-2 font-medium text-gray-600 transition-colors"
+              className="hover:text-primary inline-flex items-center gap-2 text-sm font-medium text-gray-500 transition-colors"
             >
-              <HiArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+              <HiArrowLeft className="h-4 w-4" />
               Back to News
             </Link>
           </div>
+
+          {/* Article Title Area */}
+          <div className="mb-4 max-w-4xl lg:mb-8">
+            <div className="mb-6 flex items-center gap-3">
+              <span className="text-primary bg-primary/10 rounded-full px-3 py-1 text-sm font-medium">
+                {article.category}
+              </span>
+            </div>
+            <h1 className="font-display text-3xl leading-tight font-bold text-gray-900 md:text-4xl lg:text-5xl xl:text-6xl">
+              {article.title}
+            </h1>
+          </div>
+
+          <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
+            {/* Metadata & Share Sidebar */}
+            <aside className="lg:col-span-3">
+              <div
+                className={cn(
+                  "flex flex-col gap-6",
+                  "lg:sticky lg:top-32 lg:block lg:space-y-8 lg:border-l-2 lg:border-gray-100 lg:pl-6",
+                  "border-y border-gray-100 py-6 lg:border-y-0 lg:py-0",
+                )}
+              >
+                {/* Meta Info Container */}
+                <div className="flex flex-wrap items-center gap-x-8 gap-y-4 lg:block lg:space-y-8">
+                  {/* Published On */}
+                  <div>
+                    <h3 className="mb-1 text-xs font-semibold tracking-wider text-gray-500 uppercase lg:mb-2 lg:text-sm lg:tracking-normal lg:text-gray-900 lg:normal-case">
+                      Published On
+                    </h3>
+                    <div className="flex items-center gap-2 text-gray-900 lg:text-gray-600">
+                      <HiOutlineCalendar className="text-primary h-4 w-4 lg:text-current" />
+                      <span className="text-sm font-medium lg:font-normal">
+                        {article.date}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Author */}
+                  <div>
+                    <h3 className="mb-1 text-xs font-semibold tracking-wider text-gray-500 uppercase lg:mb-2 lg:text-sm lg:tracking-normal lg:text-gray-900 lg:normal-case">
+                      Author
+                    </h3>
+                    <div className="flex items-center gap-2 lg:gap-3">
+                      <div className="hidden h-8 w-8 items-center justify-center rounded-full bg-gray-100 lg:flex">
+                        <HiOutlineUser className="h-4 w-4 text-gray-500" />
+                      </div>
+                      <span className="text-sm font-medium text-gray-900 lg:font-normal lg:text-gray-600">
+                        {article.author}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Read Time */}
+                  <div>
+                    <h3 className="mb-1 text-xs font-semibold tracking-wider text-gray-500 uppercase lg:mb-2 lg:text-sm lg:tracking-normal lg:text-gray-900 lg:normal-case">
+                      Read Time
+                    </h3>
+                    <div className="flex items-center gap-2 text-gray-900 lg:text-gray-600">
+                      <HiOutlineClock className="text-primary h-4 w-4 lg:text-current" />
+                      <span className="text-sm font-medium lg:font-normal">
+                        5 min read
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Share Section */}
+                <div className="mt-2 w-full lg:mt-0">
+                  <h3 className="mb-3 hidden text-sm font-semibold text-gray-900 lg:block">
+                    Share
+                  </h3>
+
+                  {/* Mobile Share - Clean Minimal Style */}
+                  <div className="flex items-center justify-between lg:block">
+                    <div className="flex items-center gap-3 lg:hidden">
+                      <p className="text-sm font-bold text-gray-900">
+                        Share Article
+                      </p>
+                    </div>
+
+                    <div className="flex gap-2 lg:flex-wrap">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-9 w-9 rounded-full text-gray-500 hover:bg-gray-100 hover:text-[#1DA1F2] lg:h-8 lg:w-8"
+                      >
+                        <FaXTwitter className="h-4 w-4 lg:h-3.5 lg:w-3.5" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-9 w-9 rounded-full text-gray-500 hover:bg-gray-100 hover:text-[#0A66C2] lg:h-8 lg:w-8"
+                      >
+                        <FaLinkedin className="h-4 w-4 lg:h-3.5 lg:w-3.5" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-9 w-9 rounded-full text-gray-500 hover:bg-gray-100 hover:text-[#1877F2] lg:h-8 lg:w-8"
+                      >
+                        <FaFacebook className="h-4 w-4 lg:h-3.5 lg:w-3.5" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-9 w-9 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-900 lg:h-8 lg:w-8"
+                      >
+                        <HiLink className="h-4 w-4 lg:h-3.5 lg:w-3.5" />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </aside>
+
+            {/* Right Column (Content) */}
+            <div className="lg:col-span-9">
+              {/* Hero Image */}
+              <div className="relative mb-10 aspect-video w-full overflow-hidden rounded-2xl shadow-sm md:rounded-3xl lg:mb-12">
+                <Image
+                  src={article.image}
+                  alt={article.title}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+
+              {/* Content */}
+              <ArticleContent content={article.content} />
+            </div>
+          </div>
         </div>
-      </section>
+      </article>
 
       {/* Related News */}
       {relatedArticles.length > 0 && (
-        <section className="bg-gray-50 py-16 lg:py-24">
+        <section className="border-t border-gray-200 bg-gray-50 py-8 lg:py-16">
           <div className="mx-auto max-w-7xl px-4 md:px-6">
-            <h2 className="font-display mb-12 text-3xl font-bold text-gray-900">
-              More News Article from QDAS
-            </h2>
+            <div className="mb-12 flex items-center justify-between">
+              <h2 className="font-display text-2xl font-bold text-gray-900 md:text-3xl">
+                More from Q-DAS
+              </h2>
+              <Link
+                href="/news"
+                className="group text-primary hidden items-center gap-2 text-sm font-semibold md:flex"
+              >
+                View All
+                <HiArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
             <div className="grid gap-8 md:grid-cols-3">
               {relatedArticles.map((item) => (
                 <Link
                   key={item.id}
                   href={`/news/${item.slug}`}
-                  className="group flex flex-col overflow-hidden rounded-3xl bg-white shadow-sm transition-all duration-300 hover:shadow-xl"
+                  className="group flex flex-col gap-4"
                 >
-                  <div className="relative aspect-video w-full overflow-hidden bg-gray-100">
+                  <div className="relative aspect-3/2 w-full overflow-hidden rounded-xl bg-gray-100">
                     <Image
                       src={item.image}
                       alt={item.title}
                       fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
-                  <div className="flex flex-1 flex-col p-6">
-                    <h3 className="font-display group-hover:text-primary mb-3 text-xl font-bold text-gray-900 transition-colors">
+                  <div className="flex flex-1 flex-col">
+                    <div className="mb-2 flex items-center gap-2 text-xs font-medium text-gray-500">
+                      <span className="text-primary font-semibold">
+                        {item.category}
+                      </span>
+                      <span>•</span>
+                      <span>{item.date}</span>
+                    </div>
+                    <h3 className="font-display group-hover:text-primary mb-2 text-lg leading-snug font-bold text-gray-900 transition-colors">
                       {item.title}
                     </h3>
-                    <p className="line-clamp-2 text-sm leading-relaxed text-gray-600">
-                      {item.excerpt}
-                    </p>
                   </div>
                 </Link>
               ))}
+            </div>
+            <div className="mt-8 text-center md:hidden">
+              <Link
+                href="/news"
+                className="text-primary inline-flex items-center gap-2 text-sm font-semibold"
+              >
+                View All News
+                <HiArrowRight className="h-4 w-4" />
+              </Link>
             </div>
           </div>
         </section>

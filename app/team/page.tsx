@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/shared/page-header";
 import { ContactSection } from "@/components/shared/contact-section";
-import { TeamContent } from "@/components/team/team-page-content";
+import { TeamContent } from "@/components/team/team-content";
 import { LeadershipValues } from "@/components/team/leadership-values";
 
 export const metadata: Metadata = {

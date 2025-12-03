@@ -1,131 +1,338 @@
 "use client";
 
 import { useState } from "react";
-import { HiArrowRight } from "react-icons/hi";
-import { motion, AnimatePresence } from "motion/react";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { newsArticles } from "@/lib/data/news";
+import { NewsArticle, newsArticles } from "@/lib/data/news";
 import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { HiSearch, HiCalendar } from "react-icons/hi";
 
-const categories = ["All", "Tech", "Inside QDAS", "Featured", "Newsroom"];
+const categories: NewsArticle["category"][] = [
+  "All",
+  "Tech",
+  "Inside QDAS",
+  "Featured",
+  "Newsroom",
+  "Press",
+];
 
 export function NewsContent() {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredNews =
-    activeCategory === "All"
-      ? newsArticles
-      : newsArticles.filter((article) => article.category === activeCategory);
+  // Filter news based on category and search query
+  const filteredNews = newsArticles.filter((article) => {
+    const matchesCategory =
+      activeCategory === "All" || article.category === activeCategory;
+    const matchesSearch =
+      article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      article.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
-  const featuredArticle = filteredNews[0];
-  const remainingArticles = filteredNews.slice(1);
+  // Hero Grid Logic
+  // 1. Get featured articles (or fallback to latest if none marked featured)
+  const featuredArticles = newsArticles.filter((a) => a.featured);
+  const heroCandidates =
+    featuredArticles.length >= 3 ? featuredArticles : newsArticles.slice(0, 3);
+
+  const mainHeroArticle = heroCandidates[0];
+  const subHeroArticles = heroCandidates.slice(1, 3);
+  const showHeroGrid = heroCandidates.length >= 3;
+
+  // 2. Get the rest of the articles for the list
+  // If we are showing the hero grid, exclude those 3 from the list
+  const listArticles =
+    activeCategory === "All" && !searchQuery && showHeroGrid
+      ? filteredNews.filter((a) => !heroCandidates.find((h) => h.id === a.id))
+      : filteredNews;
+
+  const [visibleCount, setVisibleCount] = useState<number>(6);
 
   return (
-    <section className="pb-24 lg:pb-32">
+    <section className="bg-white lg:pt-8">
       <div className="mx-auto max-w-7xl px-4 md:px-6">
-        {/* Filters */}
-        <div className="mb-16 flex flex-wrap gap-4 border-b border-gray-100 pb-8">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              className={cn(
-                "hover:text-primary text-sm font-medium transition-colors",
-                activeCategory === category
-                  ? "text-primary underline decoration-2 underline-offset-8"
-                  : "text-gray-500",
-              )}
-            >
-              {category}
-            </button>
-          ))}
+        {/* Top Bar: Categories & Search */}
+        <div className="mb-10 flex flex-col gap-6 border-b border-gray-100 pb-6 md:flex-row md:items-center md:justify-between">
+          {/* Categories */}
+          <div className="relative">
+            {/* Horizontal scroll container for mobile, flex-wrap for desktop */}
+            <div className="scrollbar-hide flex items-center gap-2 overflow-x-auto pb-2 md:flex-wrap md:overflow-visible md:pb-0">
+              {categories.map((category) => (
+                <motion.button
+                  key={category}
+                  onClick={() => {
+                    setActiveCategory(category);
+                    setVisibleCount(6); // Reset pagination on category change
+                  }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={cn(
+                    "focus:ring-primary min-w-fit touch-manipulation rounded-full px-4 py-2 text-sm font-medium whitespace-nowrap transition-all duration-200 focus:ring-2 focus:ring-offset-2 focus:outline-none",
+                    activeCategory === category
+                      ? "bg-primary text-white"
+                      : "bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-900 active:bg-gray-300",
+                  )}
+                >
+                  {category}
+                </motion.button>
+              ))}
+            </div>
+            {/* Left gradient fade */}
+            <div className="pointer-events-none absolute top-0 left-0 h-full w-5 bg-linear-to-r from-white to-transparent md:hidden" />
+            {/* Right gradient fade */}
+            <div className="pointer-events-none absolute top-0 right-0 h-full w-5 bg-linear-to-l from-white to-transparent md:hidden" />
+          </div>
+
+          {/* Search Input */}
+          <div className="relative w-full md:w-72">
+            <HiSearch className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
+            <Input
+              type="text"
+              placeholder="Search news..."
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setVisibleCount(6); // Reset pagination on search
+              }}
+              className="focus:ring-primary/20 h-10 border-gray-200 bg-gray-50 pl-9 text-sm transition-colors focus:bg-white"
+            />
+          </div>
         </div>
 
         <AnimatePresence mode="wait">
-          <motion.div
-            key={activeCategory}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.5 }}
-          >
-            {/* Featured Article (Hero) */}
-            {featuredArticle && (
-              <div className="mb-24 grid gap-12 lg:grid-cols-12 lg:gap-16">
-                <div className="relative aspect-16/10 w-full overflow-hidden bg-gray-100 lg:col-span-8">
-                  <Image
-                    src={featuredArticle.image}
-                    alt={featuredArticle.title}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="flex flex-col justify-center lg:col-span-4">
-                  <div className="mb-6 flex items-center gap-3 text-sm font-medium">
-                    <span className="text-primary">
-                      {featuredArticle.category}
-                    </span>
-                    <span className="h-px w-8 bg-gray-300" />
-                    <span className="text-gray-500">
-                      {featuredArticle.date}
-                    </span>
-                  </div>
+          {filteredNews.length > 0 ? (
+            <motion.div
+              key={activeCategory + searchQuery}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              transition={{ duration: 0.3 }}
+              className="space-y-16"
+            >
+              {/* Hero Grid Section (Only on 'All' tab & no search) */}
+              {activeCategory === "All" && !searchQuery && showHeroGrid && (
+                <div className="grid gap-6 lg:grid-cols-3 lg:grid-rows-2">
+                  {/* Main Hero Article (Left - Large) */}
                   <Link
-                    href={`/news/${featuredArticle.slug}`}
-                    className="group block"
+                    href={`/news/${mainHeroArticle.slug}`}
+                    className="group relative block overflow-hidden rounded-2xl bg-gray-900 lg:col-span-2 lg:row-span-2"
                   >
-                    <h2 className="font-display group-hover:text-primary mb-6 text-4xl leading-tight font-bold text-gray-900 transition-colors lg:text-5xl">
-                      {featuredArticle.title}
-                    </h2>
-                  </Link>
-                  <p className="mb-8 text-lg leading-relaxed text-gray-600">
-                    {featuredArticle.excerpt}
-                  </p>
-                  <Link
-                    href={`/news/${featuredArticle.slug}`}
-                    className="group text-primary inline-flex items-center gap-2 font-medium"
-                  >
-                    Read Article
-                    <HiArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </Link>
-                </div>
-              </div>
-            )}
-
-            {/* Remaining Articles Grid */}
-            <div className="grid gap-x-8 gap-y-16 md:grid-cols-2 lg:grid-cols-3">
-              {remainingArticles.map((article) => (
-                <Link
-                  key={article.id}
-                  href={`/news/${article.slug}`}
-                  className="group flex flex-col"
-                >
-                  <div className="relative mb-6 aspect-4/3 w-full overflow-hidden bg-gray-100">
-                    <Image
-                      src={article.image}
-                      alt={article.title}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="flex flex-1 flex-col">
-                    <div className="mb-4 flex items-center gap-3 text-xs font-medium tracking-wider uppercase">
-                      <span className="text-primary">{article.category}</span>
-                      <span className="text-gray-400">•</span>
-                      <span className="text-gray-500">{article.date}</span>
+                    <div className="relative h-full min-h-[400px] w-full lg:min-h-[500px]">
+                      <Image
+                        src={mainHeroArticle.image}
+                        alt={mainHeroArticle.title}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        priority
+                      />
+                      <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent" />
+                      <div className="absolute bottom-0 left-0 p-6 md:p-8">
+                        <div className="mb-4 flex items-center gap-3 text-xs font-medium text-white/90">
+                          <span className="bg-primary rounded px-2 py-0.5 text-white">
+                            {mainHeroArticle.category}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <HiCalendar className="h-3 w-3" />
+                            {mainHeroArticle.date}
+                          </span>
+                        </div>
+                        <h2 className="font-display mb-3 text-2xl leading-tight font-bold text-white md:text-4xl lg:text-5xl">
+                          {mainHeroArticle.title}
+                        </h2>
+                        <p className="line-clamp-2 max-w-2xl text-base text-white/80 md:text-lg">
+                          {mainHeroArticle.excerpt}
+                        </p>
+                      </div>
                     </div>
-                    <h3 className="font-display group-hover:text-primary mb-3 text-2xl leading-tight font-bold text-gray-900 transition-colors">
-                      {article.title}
+                  </Link>
+
+                  {/* Sub-Featured Articles (Right - Stacked) */}
+                  <div className="flex flex-col gap-6 lg:col-span-1 lg:row-span-2">
+                    {subHeroArticles.map((article) => (
+                      <Link
+                        key={article.id}
+                        href={`/news/${article.slug}`}
+                        className="group relative flex-1 overflow-hidden rounded-2xl bg-gray-900"
+                      >
+                        <div className="relative h-full min-h-[240px] w-full">
+                          <Image
+                            src={article.image}
+                            alt={article.title}
+                            fill
+                            className="object-cover transition-transform duration-700 group-hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent" />
+                          <div className="absolute bottom-0 left-0 p-6">
+                            <div className="mb-2 flex items-center gap-2 text-xs font-medium text-white/90">
+                              {/* Refined Tag: Glassmorphism */}
+                              <span className="rounded border border-white/20 bg-white/10 px-2 py-0.5 font-semibold text-white backdrop-blur-md">
+                                {article.category}
+                              </span>
+                              <span>•</span>
+                              <span>{article.date}</span>
+                            </div>
+                            <h3 className="font-display line-clamp-2 text-lg leading-snug font-bold text-white md:text-xl">
+                              {article.title}
+                            </h3>
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Main Article Grid */}
+              <div>
+                <div className="mb-8 flex items-center justify-between border-b border-gray-100 pb-4">
+                  <h3 className="text-2xl font-bold text-gray-900">
+                    Latest News
+                  </h3>
+                </div>
+                <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                  {listArticles.slice(0, visibleCount).map((article) => (
+                    <Link
+                      key={article.id}
+                      href={`/news/${article.slug}`}
+                      className="group flex flex-col gap-4"
+                    >
+                      <div className="relative aspect-3/2 w-full overflow-hidden rounded-xl bg-gray-100">
+                        <Image
+                          src={article.image}
+                          alt={article.title}
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                      </div>
+                      <div className="flex flex-1 flex-col">
+                        <div className="mb-2 flex items-center gap-2 text-xs font-medium text-gray-500">
+                          <span className="text-primary font-semibold">
+                            {article.category}
+                          </span>
+                          <span>•</span>
+                          <span>{article.date}</span>
+                        </div>
+                        <h3 className="font-display group-hover:text-primary mb-2 text-lg leading-snug font-bold text-gray-900 transition-colors">
+                          {article.title}
+                        </h3>
+                        <p className="line-clamp-2 text-sm leading-relaxed text-gray-600">
+                          {article.excerpt}
+                        </p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+
+                {/* Load More Button */}
+                {visibleCount < listArticles.length && (
+                  <div className="mt-12 flex justify-center">
+                    <Button
+                      variant="outline"
+                      onClick={() => setVisibleCount((prev) => prev + 6)}
+                      className="h-12 min-w-[200px] rounded-full border-gray-200 text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                    >
+                      Load More Articles
+                    </Button>
+                  </div>
+                )}
+              </div>
+
+              {/* Newsletter Section (Bottom) */}
+              <div className="relative overflow-hidden rounded-3xl bg-gray-900 px-6 py-16 sm:px-12 lg:px-20">
+                {/* Subtle Grid Background */}
+                <div className="absolute inset-0 opacity-10">
+                  <svg
+                    className="h-full w-full"
+                    width="100%"
+                    height="100%"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <defs>
+                      <pattern
+                        id="grid-pattern"
+                        width="40"
+                        height="40"
+                        patternUnits="userSpaceOnUse"
+                      >
+                        <path
+                          d="M0 40L40 0H20L0 20M40 40V20L20 40"
+                          stroke="currentColor"
+                          strokeWidth="1"
+                          fill="none"
+                          className="text-white"
+                        />
+                      </pattern>
+                    </defs>
+                    <rect
+                      width="100%"
+                      height="100%"
+                      fill="url(#grid-pattern)"
+                    />
+                  </svg>
+                </div>
+
+                <div className="relative z-10 flex flex-col items-center gap-10 lg:flex-row lg:justify-between">
+                  {/* Text Content */}
+                  <div className="max-w-xl text-center lg:text-left">
+                    <h3 className="font-display mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                      The Future, Delivered.
                     </h3>
-                    <p className="line-clamp-3 text-base leading-relaxed text-gray-600">
-                      {article.excerpt}
+                    <p className="text-lg text-gray-400">
+                      Join 10,000+ engineers and innovators staying ahead of the
+                      curve with our weekly insights.
                     </p>
                   </div>
-                </Link>
-              ))}
-            </div>
-          </motion.div>
+
+                  {/* Input Form */}
+                  <div className="w-full max-w-md">
+                    <div className="flex flex-col gap-3 sm:flex-row">
+                      <Input
+                        placeholder="Enter your email"
+                        className="h-12 border-white/10 bg-white/5 text-white placeholder:text-gray-500 focus:border-white/20 focus:bg-white/10 focus:ring-0"
+                      />
+                      <Button className="h-12 bg-white px-8 font-bold text-gray-900 hover:bg-gray-100">
+                        Join Now
+                      </Button>
+                    </div>
+                    <p className="mt-3 text-center text-xs text-gray-500 lg:text-left">
+                      No spam. Unsubscribe anytime.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="flex flex-col items-center justify-center py-20 text-center"
+            >
+              <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gray-100">
+                <HiSearch className="h-8 w-8 text-gray-400" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900">
+                No articles found
+              </h3>
+              <p className="max-w-xs text-sm text-gray-500">
+                We couldn't find any articles matching "{searchQuery}". Try
+                adjusting your search or filters.
+              </p>
+              <Button
+                variant="outline"
+                className="mt-6"
+                onClick={() => {
+                  setSearchQuery("");
+                  setActiveCategory("All");
+                }}
+              >
+                Clear Filters
+              </Button>
+            </motion.div>
+          )}
         </AnimatePresence>
       </div>
     </section>

@@ -145,7 +145,7 @@ export function MobileMenu({ isOpen, isScrolled, onClose }: MobileMenuProps) {
                 }}
               >
                 <Link
-                  href="/#contact"
+                  href="/contact"
                   onClick={onClose}
                   className="group bg-primary hover:bg-primary/90 shadow-primary/20 hover:shadow-primary/30 inline-flex w-full items-center justify-center gap-2 rounded-3xl px-5 py-2.5 text-center text-sm font-medium text-white shadow-lg transition-all duration-200 hover:shadow-xl"
                 >

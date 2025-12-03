@@ -6,7 +6,7 @@ import { teamMembers } from "@/lib/data/team";
 
 export function TeamContent() {
   return (
-    <section className="pb-20 lg:pt-20 lg:pb-32">
+    <section className="bg-gray-50 pb-20 lg:pt-20 lg:pb-32">
       <div className="mx-auto max-w-7xl px-4 md:px-6">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 lg:gap-10">
           {teamMembers.map((member, index) => (

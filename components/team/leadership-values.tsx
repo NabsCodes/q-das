@@ -30,7 +30,7 @@ const values = [
 
 export function LeadershipValues() {
   return (
-    <section className="bg-gray-50 py-24">
+    <section className="py-24">
       <div className="mx-auto max-w-7xl px-4 md:px-6">
         <div className="mb-12">
           <motion.div
@@ -62,7 +62,7 @@ export function LeadershipValues() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 + 0.2 }}
-              className="group relative border-b border-gray-100 bg-white px-4 pt-10 pb-10 lg:border-r lg:border-b-0 lg:pt-16 lg:pr-12 lg:pl-12 lg:last:border-r-0"
+              className="group relative border-b border-gray-100 bg-gray-50 px-4 pt-10 pb-10 lg:border-r lg:border-b-0 lg:pt-16 lg:pr-12 lg:pl-12 lg:last:border-r-0"
             >
               {/* Tech Accent Line Animation */}
               <div className="bg-primary absolute top-0 left-0 h-[2px] w-0 transition-all duration-700 ease-out group-hover:w-full" />
