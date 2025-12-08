@@ -1,3 +1,8 @@
+/* 
+ This file was mock data for the team members. It is not used in the project anymore.
+ It is kept here for reference only. Was used to migrate the data to Sanity. And also to test the UI components.
+*/
+
 export type TeamMember = {
   name: string;
   role: string;
