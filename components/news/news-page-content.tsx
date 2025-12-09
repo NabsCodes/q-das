@@ -267,9 +267,10 @@ export function NewsContent({ articles }: NewsContentProps) {
                 )}
               </div>
 
-              {/* Newsletter Section (Bottom) */}
+              {/* Newsletter Section (Bottom) - Commented out, requires backend integration */}
+              {/* TODO: Implement newsletter subscription with email marketing service (e.g., Resend Audiences, Mailchimp) */}
+              {/*
               <div className="relative overflow-hidden rounded-3xl bg-gray-900 px-6 py-16 sm:px-12 lg:px-20">
-                {/* Subtle Grid Background */}
                 <div className="absolute inset-0 opacity-10">
                   <svg
                     className="h-full w-full"
@@ -302,7 +303,6 @@ export function NewsContent({ articles }: NewsContentProps) {
                 </div>
 
                 <div className="relative z-10 flex flex-col items-center gap-10 lg:flex-row lg:justify-between">
-                  {/* Text Content */}
                   <div className="max-w-xl text-center lg:text-left">
                     <h3 className="font-display mb-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
                       The Future, Delivered.
@@ -313,7 +313,6 @@ export function NewsContent({ articles }: NewsContentProps) {
                     </p>
                   </div>
 
-                  {/* Input Form */}
                   <div className="w-full max-w-md">
                     <div className="flex flex-col gap-3 sm:flex-row">
                       <Input
@@ -330,6 +329,7 @@ export function NewsContent({ articles }: NewsContentProps) {
                   </div>
                 </div>
               </div>
+              */}
             </motion.div>
           ) : (
             <motion.div

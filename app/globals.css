@@ -165,6 +165,29 @@ body {
   }
 }
 
+/* Article content overflow fixes */
+/* This ensures code blocks, tables, and other wide content scroll horizontally instead of overflowing */
+.article-content {
+  min-width: 0; /* Required for grid/flex children to allow shrinking */
+}
+
+.article-content pre,
+.article-content code[class*="language-"] {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.article-content table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.article-content > div {
+  max-width: 100%;
+}
+
 @keyframes spin-slow {
   from {
     transform: rotate(0deg);

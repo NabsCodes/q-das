@@ -88,7 +88,6 @@ export function ArticleContent({
                 showLineNumbers={true}
                 lineNumberStyle={{
                   color: "#6b7280",
-                  minWidth: "2.5rem",
                   paddingRight: "1rem",
                   textAlign: "right",
                 }}
@@ -149,7 +148,7 @@ export function ArticleContent({
 
         return (
           <div className="my-8 overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
-            <table className="w-full min-w-[600px] border-collapse text-left text-sm">
+            <table className="w-full border-collapse text-left text-sm">
               {caption && (
                 <caption className="border-b border-gray-200 bg-gray-50 px-4 py-3 text-left text-sm font-medium text-gray-700">
                   {caption}
@@ -341,7 +340,7 @@ export function ArticleContent({
   };
 
   return (
-    <div className={`max-w-none ${className}`}>
+    <div className={`article-content min-w-0 overflow-hidden ${className}`}>
       <PortableText value={content} components={components} />
     </div>
   );

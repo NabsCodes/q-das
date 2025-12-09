@@ -87,7 +87,7 @@ export default async function NewsDetailPage({ params }: NewsDetailProps) {
           </div>
 
           {/* Article Title Area */}
-          <div className="mb-4 max-w-4xl lg:mb-8">
+          <div className="mb-4 lg:mb-8">
             <div className="mb-6 flex items-center gap-3">
               <span className="text-primary bg-primary/10 rounded-full px-3 py-1 text-sm font-medium">
                 {article.category}
@@ -202,7 +202,7 @@ export default async function NewsDetailPage({ params }: NewsDetailProps) {
             </aside>
 
             {/* Right Column (Content) */}
-            <div className="lg:col-span-9">
+            <div className="min-w-0 lg:col-span-9">
               {/* Hero Image */}
               <div className="relative mb-10 aspect-video w-full overflow-hidden rounded-2xl shadow-sm md:rounded-3xl lg:mb-12">
                 <ImageWithFallback
@@ -246,9 +246,9 @@ export default async function NewsDetailPage({ params }: NewsDetailProps) {
                 <Link
                   key={item.id}
                   href={`/news/${item.slug}`}
-                  className="group flex flex-col gap-4"
+                  className="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-gray-200/50 transition-shadow hover:shadow-md"
                 >
-                  <div className="relative aspect-3/2 w-full overflow-hidden rounded-xl bg-gray-100">
+                  <div className="relative aspect-3/2 w-full overflow-hidden bg-gray-200">
                     <ImageWithFallback
                       src={
                         item.mainImage
@@ -260,7 +260,7 @@ export default async function NewsDetailPage({ params }: NewsDetailProps) {
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
-                  <div className="flex flex-1 flex-col">
+                  <div className="flex flex-1 flex-col p-5">
                     <div className="mb-2 flex items-center gap-2 text-xs font-medium text-gray-500">
                       <span className="text-primary font-semibold">
                         {item.category}
@@ -268,7 +268,7 @@ export default async function NewsDetailPage({ params }: NewsDetailProps) {
                       <span>•</span>
                       <span>{formatDate(item.date)}</span>
                     </div>
-                    <h3 className="font-display group-hover:text-primary mb-2 text-lg leading-snug font-bold text-gray-900 transition-colors">
+                    <h3 className="font-display group-hover:text-primary text-lg leading-snug font-bold text-gray-900 transition-colors">
                       {item.title}
                     </h3>
                   </div>
