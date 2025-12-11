@@ -63,7 +63,7 @@ export function AboutVisionMission() {
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="relative h-full w-full">
                 <Image
-                  src="/shape-dark-theme.webp"
+                  src="/images/shape-dark-theme.webp"
                   alt="Vision and Mission"
                   fill
                   className="object-cover object-center"

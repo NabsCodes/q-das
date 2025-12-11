@@ -151,7 +151,7 @@ export default function Header() {
             >
               <div className="relative h-32 w-32">
                 <Image
-                  src="/Logo.png"
+                  src="/images/Logo.png"
                   alt="Q-DAS Global logo"
                   fill
                   sizes="128px"
@@ -323,7 +323,7 @@ export default function Header() {
             >
               <div className="relative h-[32px] w-[98px]">
                 <Image
-                  src="/Logo.png"
+                  src="/images/Logo.png"
                   alt="Q-DAS Global logo"
                   fill
                   sizes="98px"

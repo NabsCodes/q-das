@@ -36,41 +36,41 @@ export const coreValues: CoreValue[] = [
     description:
       "We don't compromise — quality defines our name, our culture, and our delivery.",
     iconName: "userGroup",
-    image: "/values/quality-first.webp",
+    image: "/images/values/quality-first.webp",
   },
   {
     title: "Integrity",
     description:
       "We do the right thing, even when no one is watching. Trust is our foundation.",
     iconName: "shieldCheck",
-    image: "/values/integrity.webp",
+    image: "/images/values/integrity.webp",
   },
   {
     title: "Innovation",
     description:
       "We embrace technology and creativity to solve real problems and unlock new value.",
     iconName: "lightBulb",
-    image: "/values/innovation.webp",
+    image: "/images/values/innovation.webp",
   },
   {
     title: "Resilience",
     description:
       "We are built to endure. Rooted in African strength, we adapt and thrive in any environment.",
     iconName: "refresh",
-    image: "/values/resilience.webp",
+    image: "/images/values/resilience.webp",
   },
   {
     title: "Impact - Driven",
     description: "Our solutions are designed to create lasting value.",
     iconName: "globeAlt",
-    image: "/values/impact-driven.webp",
+    image: "/images/values/impact-driven.webp",
   },
   {
     title: "Collaboration",
     description:
       "We build meaningful partnerships across borders, sectors, and cultures.",
     iconName: "users",
-    image: "/values/collaboration.webp",
+    image: "/images/values/collaboration.webp",
   },
 ];
 

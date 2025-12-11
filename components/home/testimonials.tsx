@@ -22,7 +22,7 @@ export function Testimonials({ testimonials = [] }: TestimonialsProps) {
         {/* Background 3D shape image - Reused from Hero */}
         <div className="absolute inset-0 z-0 h-full w-full">
           <Image
-            src="/shape-light-hero.webp"
+            src="/images/shape-light-hero.webp"
             alt="Abstract 3D glass rings"
             fill
             className="object-cover object-center opacity-60"
@@ -111,7 +111,7 @@ export function Testimonials({ testimonials = [] }: TestimonialsProps) {
       {/* Background 3D shape image - Reused from Hero */}
       <div className="absolute inset-0 z-0 h-full w-full">
         <Image
-          src="/shape-light-hero.webp"
+          src="/images/shape-light-hero.webp"
           alt="Abstract 3D glass rings"
           fill
           className="object-cover object-center opacity-60"

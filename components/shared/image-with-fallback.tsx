@@ -61,7 +61,7 @@ export function ImageWithFallback({
           <div className="relative mb-2 h-8 w-auto opacity-40 grayscale transition-all duration-500 group-hover:opacity-100 group-hover:grayscale-0">
             {/* Using Next.js Image for the logo fallback to ensure optimization */}
             <Image
-              src="/Logo.png"
+              src="/images/Logo.png"
               alt="Q-DAS Global"
               width={100}
               height={40}

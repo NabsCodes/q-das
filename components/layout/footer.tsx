@@ -29,7 +29,7 @@ export default function Footer() {
             >
               <div className="relative h-12 w-36 shrink-0">
                 <Image
-                  src="/Logo-dark.webp"
+                  src="/images/Logo-dark.webp"
                   alt="Q-DAS Global logo"
                   fill
                   sizes="(max-width: 768px) 144px, 144px"

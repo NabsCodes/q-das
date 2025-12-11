@@ -43,7 +43,7 @@ export const services: Service[] = [
         desc: "Infusing apps with machine learning, chatbots, and predictive analytics.",
       },
     ],
-    image: "/services/SOFTWARE & APPLICATION DEVELOPMENT 1.webp",
+    image: "/images/services/SOFTWARE & APPLICATION DEVELOPMENT 1.webp",
   },
   {
     id: "managed-it-services",
@@ -76,7 +76,7 @@ export const services: Service[] = [
         desc: "Aligning technology with business objectives for long-term success.",
       },
     ],
-    image: "/services/MANAGED IT SERVICES 1.webp",
+    image: "/images/services/MANAGED IT SERVICES 1.webp",
   },
   {
     id: "infrastructure-solutions",
@@ -113,7 +113,7 @@ export const services: Service[] = [
         desc: "Scalable cloud infrastructure coupled with big data analytics.",
       },
     ],
-    image: "/services/Infrastructure Solutions 2 1.webp",
+    image: "/images/services/Infrastructure Solutions 2 1.webp",
   },
   {
     id: "it-consulting",
@@ -138,7 +138,7 @@ export const services: Service[] = [
         desc: "Ensuring smooth implementation and organization-wide buy-in for new systems.",
       },
     ],
-    image: "/services/IT Consulting 1.webp",
+    image: "/images/services/IT Consulting 1.webp",
   },
   {
     id: "professional-support",
@@ -167,6 +167,6 @@ export const services: Service[] = [
         desc: "Clearly defined metrics and performance standards tailored to your needs.",
       },
     ],
-    image: "/services/Professional Support 1.webp",
+    image: "/images/services/Professional Support 1.webp",
   },
 ];

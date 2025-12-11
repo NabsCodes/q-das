@@ -9,27 +9,27 @@ import Image from "next/image";
 const partners = [
   {
     name: "HA-SHEM",
-    logo: "/partners/Ha-Shem-logo.webp",
+    logo: "/images/partners/Ha-Shem-logo.webp",
   },
   {
     name: "ERICSSON",
-    logo: "/partners/ericsson-logo.webp",
+    logo: "/images/partners/ericsson-logo.webp",
   },
   {
     name: "SchoolTry",
-    logo: "/partners/schooltry-logo.webp",
+    logo: "/images/partners/schooltry-logo.webp",
   },
   {
     name: "Hewlett Packard Enterprise",
-    logo: "/partners/Hewlett-logo.webp",
+    logo: "/images/partners/Hewlett-logo.webp",
   },
   {
     name: "HUAWEI",
-    logo: "/partners/Huawei-logo.webp",
+    logo: "/images/partners/Huawei-logo.webp",
   },
   {
     name: "SeamlessHR",
-    logo: "/partners/seamlesshr-logo.webp",
+    logo: "/images/partners/seamlesshr-logo.webp",
   },
 ];
 

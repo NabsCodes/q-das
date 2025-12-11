@@ -17,7 +17,7 @@ export function Hero() {
       {/* Background 3D shape image */}
       <div className="absolute inset-0 z-0 h-full w-full">
         <Image
-          src="/shape-light-hero.webp"
+          src="/images/shape-light-hero.webp"
           alt="Abstract 3D glass rings"
           fill
           className="object-cover object-center"
@@ -188,7 +188,7 @@ export function Hero() {
             <div className="relative h-40 w-40 shrink-0 md:h-44 md:w-44">
               <div className="absolute inset-0 overflow-hidden rounded-full">
                 <Image
-                  src="/circle-hero.webp"
+                  src="/images/circle-hero.webp"
                   alt="Circle background"
                   fill
                   className="object-cover"
