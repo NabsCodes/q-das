@@ -177,11 +177,10 @@ body {
   overflow-x: auto;
 }
 
+/* Tables are wrapped in a div with overflow-x-auto in the component */
+/* We only need to ensure the table doesn't break its container */
 .article-content table {
-  display: block;
   max-width: 100%;
-  overflow-x: auto;
-  white-space: nowrap;
 }
 
 .article-content > div {

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ImageWithFallback } from "@/components/shared/image-with-fallback";
+import { NewsCard } from "@/components/news/news-card";
 import Link from "next/link";
 import { NewsArticle } from "@/lib/data/news";
 import { cn, formatDate } from "@/lib/utils";
@@ -214,42 +215,7 @@ export function NewsContent({ articles }: NewsContentProps) {
                 </div>
                 <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
                   {listArticles.slice(0, visibleCount).map((article) => (
-                    <Link
-                      key={article.id}
-                      href={`/news/${article.slug}`}
-                      className="group flex flex-col gap-4"
-                    >
-                      <div className="relative aspect-3/2 w-full overflow-hidden rounded-xl bg-gray-100">
-                        <ImageWithFallback
-                          src={
-                            article.mainImage?.asset
-                              ? urlFor(article.mainImage)
-                                  .width(600)
-                                  .height(400)
-                                  .url()
-                              : article.image
-                          }
-                          alt={article.title}
-                          fill
-                          className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                      </div>
-                      <div className="flex flex-1 flex-col">
-                        <div className="mb-2 flex items-center gap-2 text-xs font-medium text-gray-500">
-                          <span className="text-primary font-semibold">
-                            {article.category}
-                          </span>
-                          <span>•</span>
-                          <span>{formatDate(article.date)}</span>
-                        </div>
-                        <h3 className="font-display group-hover:text-primary mb-2 text-lg leading-snug font-bold text-gray-900 transition-colors">
-                          {article.title}
-                        </h3>
-                        <p className="line-clamp-2 text-sm leading-relaxed text-gray-600">
-                          {article.excerpt}
-                        </p>
-                      </div>
-                    </Link>
+                    <NewsCard key={article.id} article={article} />
                   ))}
                 </div>
 

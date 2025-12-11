@@ -1,21 +1,19 @@
 import { getNewsArticles, getNewsArticle } from "@/lib/sanity/fetch";
 import { ContactSection } from "@/components/shared/contact-section";
 import { ArticleContent } from "@/components/news/article-content";
+import { NewsCard } from "@/components/news/news-card";
+import { ShareButtons } from "@/components/news/share-buttons";
 import {
   HiArrowLeft,
   HiOutlineCalendar,
   HiOutlineUser,
   HiOutlineClock,
-  HiLink,
   HiArrowRight,
 } from "react-icons/hi";
-import { FaLinkedin, FaFacebook } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
 import { ImageWithFallback } from "@/components/shared/image-with-fallback";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import { Button } from "@/components/ui/button";
 import { cn, formatDate } from "@/lib/utils";
 import { urlFor } from "@/lib/sanity/image";
 
@@ -158,7 +156,7 @@ export default async function NewsDetailPage({ params }: NewsDetailProps) {
                     Share
                   </h3>
 
-                  {/* Mobile Share - Clean Minimal Style */}
+                  {/* Mobile Share */}
                   <div className="flex items-center justify-between lg:block">
                     <div className="flex items-center gap-3 lg:hidden">
                       <p className="text-sm font-bold text-gray-900">
@@ -166,36 +164,12 @@ export default async function NewsDetailPage({ params }: NewsDetailProps) {
                       </p>
                     </div>
 
-                    <div className="flex gap-2 lg:flex-wrap">
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-9 w-9 rounded-full text-gray-500 hover:bg-gray-100 hover:text-[#1DA1F2] lg:h-8 lg:w-8"
-                      >
-                        <FaXTwitter className="h-4 w-4 lg:h-3.5 lg:w-3.5" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-9 w-9 rounded-full text-gray-500 hover:bg-gray-100 hover:text-[#0A66C2] lg:h-8 lg:w-8"
-                      >
-                        <FaLinkedin className="h-4 w-4 lg:h-3.5 lg:w-3.5" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-9 w-9 rounded-full text-gray-500 hover:bg-gray-100 hover:text-[#1877F2] lg:h-8 lg:w-8"
-                      >
-                        <FaFacebook className="h-4 w-4 lg:h-3.5 lg:w-3.5" />
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-9 w-9 rounded-full text-gray-500 hover:bg-gray-100 hover:text-gray-900 lg:h-8 lg:w-8"
-                      >
-                        <HiLink className="h-4 w-4 lg:h-3.5 lg:w-3.5" />
-                      </Button>
-                    </div>
+                    <ShareButtons
+                      url={`https://qdasglobal.com/news/${slug}`}
+                      title={article.title}
+                      description={article.excerpt}
+                      className="lg:flex-wrap"
+                    />
                   </div>
                 </div>
               </div>
@@ -243,36 +217,12 @@ export default async function NewsDetailPage({ params }: NewsDetailProps) {
             </div>
             <div className="grid gap-8 md:grid-cols-3">
               {relatedArticles.map((item) => (
-                <Link
+                <NewsCard
                   key={item.id}
-                  href={`/news/${item.slug}`}
-                  className="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-gray-200/50 transition-shadow hover:shadow-md"
-                >
-                  <div className="relative aspect-3/2 w-full overflow-hidden bg-gray-200">
-                    <ImageWithFallback
-                      src={
-                        item.mainImage
-                          ? urlFor(item.mainImage).width(600).height(400).url()
-                          : item.image
-                      }
-                      alt={item.title}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="flex flex-1 flex-col p-5">
-                    <div className="mb-2 flex items-center gap-2 text-xs font-medium text-gray-500">
-                      <span className="text-primary font-semibold">
-                        {item.category}
-                      </span>
-                      <span>•</span>
-                      <span>{formatDate(item.date)}</span>
-                    </div>
-                    <h3 className="font-display group-hover:text-primary text-lg leading-snug font-bold text-gray-900 transition-colors">
-                      {item.title}
-                    </h3>
-                  </div>
-                </Link>
+                  article={item}
+                  variant="elevated"
+                  showExcerpt={false}
+                />
               ))}
             </div>
             <div className="mt-8 text-center md:hidden">
