@@ -12,9 +12,6 @@ interface TeamMemberPageProps {
   }>;
 }
 
-// ISR: Revalidate every hour (team changes infrequently)
-export const revalidate = 3600;
-
 export async function generateStaticParams() {
   const members = await getTeamMembers();
   // Filter out members without valid slugs (e.g., legacy data without slug field)

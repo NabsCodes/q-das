@@ -10,9 +10,6 @@ export const metadata: Metadata = {
     "Latest news, success stories, and tech breakthroughs from Q-DAS Global. Stay updated with industry insights.",
 };
 
-// ISR: Revalidate every 60 seconds
-export const revalidate = 60;
-
 export default async function NewsPage() {
   const articles = await getNewsArticles();
 

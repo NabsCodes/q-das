@@ -11,9 +11,6 @@ export const metadata: Metadata = {
     "Meet the leadership team driving Q-DAS Global's innovation and growth in ICT solutions across Africa.",
 };
 
-// ISR: Revalidate every hour (team changes infrequently)
-export const revalidate = 3600;
-
 export default async function TeamPage() {
   const members = await getTeamMembers();
 
