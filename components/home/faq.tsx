@@ -9,9 +9,18 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { SectionBadge } from "@/components/section-badge";
-import { faqs } from "@/lib/data";
+import type { SanityFAQ } from "@/lib/sanity/fetch";
 
-export function FAQ() {
+interface FAQProps {
+  faqs: SanityFAQ[];
+}
+
+export function FAQ({ faqs }: FAQProps) {
+  // Don't render the section if there are no FAQs
+  if (!faqs || faqs.length === 0) {
+    return null;
+  }
+
   return (
     <section className="relative overflow-hidden bg-gray-50 py-24 lg:py-32">
       <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-6">
@@ -54,7 +63,7 @@ export function FAQ() {
           <Accordion type="single" collapsible className="space-y-4">
             {faqs.map((faq, index) => (
               <motion.div
-                key={faq.question}
+                key={faq._id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}

@@ -4,11 +4,20 @@ import { motion, useReducedMotion } from "motion/react";
 import { HiUsers } from "react-icons/hi";
 import { SectionBadge } from "@/components/section-badge";
 import { Marquee } from "@/components/ui/marquee";
-import Image from "next/image";
-import { partners } from "@/lib/data";
+import { ImageWithFallback } from "@/components/shared/image-with-fallback";
+import type { SanityPartner } from "@/lib/sanity/fetch";
 
-export function Partnerships() {
+interface PartnershipsProps {
+  partners: SanityPartner[];
+}
+
+export function Partnerships({ partners }: PartnershipsProps) {
   const shouldReduceMotion = useReducedMotion();
+
+  // Don't render the section if there are no partners
+  if (!partners || partners.length === 0) {
+    return null;
+  }
 
   return (
     <section className="relative py-24 lg:py-32">
@@ -98,14 +107,14 @@ export function Partnerships() {
           pauseOnHover
           className="[--duration:40s] [--gap:4rem] md:[--gap:5rem] lg:[--gap:6rem]"
         >
-          {partners.map((partner, index) => (
+          {partners.map((partner) => (
             <div
-              key={index}
+              key={partner._id}
               className="group flex h-20 shrink-0 items-center justify-center md:h-24 lg:h-28"
               style={{ width: "220px" }}
             >
               <div className="relative h-full w-full transition-all duration-300">
-                <Image
+                <ImageWithFallback
                   src={partner.logo}
                   alt={`${partner.name} logo`}
                   fill

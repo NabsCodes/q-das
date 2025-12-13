@@ -7,19 +7,23 @@ import {
   FAQ,
 } from "@/components/home";
 import { ContactSection } from "@/components/shared/contact-section";
-import { getTestimonials } from "@/lib/sanity/fetch";
+import { getFAQs, getPartners, getTestimonials } from "@/lib/sanity/fetch";
 
 export default async function Home() {
-  const testimonials = await getTestimonials(); // Fetch data from sanity
+  const [testimonials, faqs, partners] = await Promise.all([
+    getTestimonials(),
+    getFAQs(),
+    getPartners(),
+  ]);
 
   return (
     <main className="flex-1">
       <Hero />
-      <Partnerships />
+      <Partnerships partners={partners} />
       <Services />
       <WhyChooseUs />
       <Testimonials testimonials={testimonials} />
-      <FAQ />
+      <FAQ faqs={faqs} />
       <ContactSection />
     </main>
   );

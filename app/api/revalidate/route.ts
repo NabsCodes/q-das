@@ -8,6 +8,8 @@ const REVALIDATE_PATHS: Record<string, string[]> = {
   teamMember: ["/team"],
   testimonial: ["/"],
   author: ["/news"],
+  faq: ["/"],
+  partner: ["/"],
 
   // Future content types - just add a line:
   // service: ["/services", "/"],

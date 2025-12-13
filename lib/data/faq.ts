@@ -1,3 +1,10 @@
+/**
+ * @deprecated This static data has been migrated to Sanity CMS.
+ * This file is kept for reference only.
+ * See: /sanity/schemas/faq.ts for the schema
+ * See: /lib/sanity/fetch.ts for the getFAQs() function
+ */
+
 export type FAQ = {
   question: string;
   answer: string;

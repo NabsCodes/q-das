@@ -1,3 +1,10 @@
+/**
+ * @deprecated This static data has been migrated to Sanity CMS.
+ * This file is kept for reference only.
+ * See: /sanity/schemas/partner.ts for the schema
+ * See: /lib/sanity/fetch.ts for the getPartners() function
+ */
+
 export type Partner = {
   name: string;
   logo: string;

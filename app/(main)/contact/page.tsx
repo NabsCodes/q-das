@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/shared/page-header";
 import { ContactContent } from "@/components/contact/contact-page-content";
 import { FAQ } from "@/components/home/faq";
+import { getFAQs } from "@/lib/sanity/fetch";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -9,7 +10,9 @@ export const metadata: Metadata = {
     "Get in touch with Q-DAS Global. We're ready to help transform your business with intelligent ICT solutions.",
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const faqs = await getFAQs();
+
   return (
     <main className="flex-1">
       <PageHeader
@@ -24,7 +27,7 @@ export default function ContactPage() {
         icon="chatBubbleLeftRight"
       />
       <ContactContent />
-      <FAQ />
+      <FAQ faqs={faqs} />
     </main>
   );
 }

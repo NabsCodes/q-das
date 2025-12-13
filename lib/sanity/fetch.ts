@@ -3,7 +3,7 @@ import type { NewsArticle } from "@/lib/data/news";
 import type { TeamMember } from "@/lib/data/team";
 import type { Testimonial } from "@/lib/types/testimonial";
 
-// Helper: Only fetch published documents (excludes drafts)
+// Only fetch published documents (excludes drafts)
 // Draft documents in Sanity have _id starting with "drafts."
 const publishedFilter = `!(_id in path("drafts.**"))`;
 
@@ -86,6 +86,44 @@ export async function getTestimonials(): Promise<Testimonial[]> {
     company,
     content,
     "avatar": avatar.asset->url
+  }`;
+  return client.fetch(query);
+}
+
+// FAQ types and fetch function
+export interface SanityFAQ {
+  _id: string;
+  question: string;
+  answer: string;
+  order?: number;
+}
+
+export async function getFAQs(): Promise<SanityFAQ[]> {
+  const query = `*[_type == "faq" && ${publishedFilter}] | order(order asc) {
+    _id,
+    question,
+    answer,
+    order
+  }`;
+  return client.fetch(query);
+}
+
+// Partner types and fetch function
+export interface SanityPartner {
+  _id: string;
+  name: string;
+  logo: string;
+  website?: string;
+  order?: number;
+}
+
+export async function getPartners(): Promise<SanityPartner[]> {
+  const query = `*[_type == "partner" && ${publishedFilter}] | order(order asc) {
+    _id,
+    name,
+    "logo": logo.asset->url,
+    website,
+    order
   }`;
   return client.fetch(query);
 }

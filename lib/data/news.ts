@@ -1,7 +1,9 @@
-/* 
- This file was mock data for the news articles. It is not used in the project anymore.
- It is kept here for reference only. Was used to migrate the data to Sanity. And also to test the UI components.
-*/
+/**
+ * @deprecated This static data has been migrated to Sanity CMS.
+ * This file is kept for reference only.
+ * See: /sanity/schemas/news.ts for the schema
+ * See: /lib/sanity/fetch.ts for the getNewsArticles() function
+ */
 
 import { NewsPortableText, SanityImage } from "@/lib/types/news";
 
