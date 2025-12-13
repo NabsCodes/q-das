@@ -3,17 +3,29 @@
 import { motion, Transition, useReducedMotion } from "motion/react";
 import { SectionBadge } from "@/components/section-badge";
 import { IconType } from "react-icons";
-import { HiCog, HiUserGroup, HiNewspaper, HiChatAlt2 } from "react-icons/hi";
+import {
+  HiCollection,
+  HiUserGroup,
+  HiNewspaper,
+  HiChatAlt2,
+  HiBookOpen,
+} from "react-icons/hi";
 import { cn } from "@/lib/utils";
 import React from "react";
 
-type IconName = "cog" | "userGroup" | "newspaper" | "chatBubbleLeftRight";
+type IconName =
+  | "collection"
+  | "userGroup"
+  | "newspaper"
+  | "chatBubbleLeftRight"
+  | "bookOpen";
 
 const iconMap: Record<IconName, IconType> = {
-  cog: HiCog,
+  collection: HiCollection,
   userGroup: HiUserGroup,
   newspaper: HiNewspaper,
   chatBubbleLeftRight: HiChatAlt2,
+  bookOpen: HiBookOpen,
 };
 
 interface PageHeaderProps {

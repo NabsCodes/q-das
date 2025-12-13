@@ -21,7 +21,7 @@ export default function AboutPage() {
           </>
         }
         description="Since 2011, Q-DAS Global has been empowering organizations with intelligent, secure, and scalable ICT solutions."
-        icon="userGroup"
+        icon="bookOpen"
       />
       <AboutContent />
       <ContactSection />

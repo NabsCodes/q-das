@@ -21,7 +21,7 @@ export default function ServicesPage() {
           </>
         }
         description="From intelligent software development to robust infrastructure, we deliver the systems that power modern enterprises."
-        icon="cog"
+        icon="collection"
       />
       <ServicesContent />
       <ContactSection />
