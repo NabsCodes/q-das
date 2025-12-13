@@ -8,13 +8,15 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 const montserrat = Montserrat({
   variable: "--font-display",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "600", "700"],
+  display: "swap",
 });
 
 const montserratBody = Montserrat({
   variable: "--font-body",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
+  display: "swap",
 });
 
 const siteDescription =

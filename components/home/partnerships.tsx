@@ -120,6 +120,8 @@ export function Partnerships({ partners }: PartnershipsProps) {
                   fill
                   className="object-contain object-center grayscale transition-all duration-300 group-hover:grayscale-0"
                   sizes="(max-width: 768px) 180px, 220px"
+                  quality={80}
+                  loading="lazy"
                 />
                 {/* Partner name tooltip on hover */}
                 <div className="pointer-events-none absolute -bottom-8 left-1/2 -translate-x-1/2 rounded-md bg-gray-900 px-2 py-1 text-xs whitespace-nowrap text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">

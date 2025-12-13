@@ -22,8 +22,8 @@ export function Hero() {
           fill
           className="object-cover object-center"
           priority
-          quality={90}
-          sizes="100vw"
+          quality={75}
+          sizes="(max-width: 640px) 640px, (max-width: 1024px) 1024px, 1920px"
           placeholder="blur"
           blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyMCIgaGVpZ2h0PSI5MTgiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0iI2U1ZjBmZiIvPjwvc3ZnPg=="
         />
@@ -192,6 +192,7 @@ export function Hero() {
                   alt="Circle background"
                   fill
                   className="object-cover"
+                  priority
                   quality={85}
                   sizes="(max-width: 768px) 160px, 176px"
                 />

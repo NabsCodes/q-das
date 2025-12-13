@@ -26,8 +26,9 @@ export function Testimonials({ testimonials = [] }: TestimonialsProps) {
             alt="Abstract 3D glass rings"
             fill
             className="object-cover object-center opacity-60"
-            quality={100}
+            quality={75}
             sizes="100vw"
+            loading="lazy"
           />
         </div>
 

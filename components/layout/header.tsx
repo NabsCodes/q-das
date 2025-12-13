@@ -151,13 +151,13 @@ export default function Header() {
             >
               <div className="relative h-32 w-32">
                 <Image
-                  src="/images/Logo.png"
+                  src="/images/Logo.webp"
                   alt="Q-DAS Global logo"
                   fill
                   sizes="128px"
                   className="object-contain transition-opacity duration-200 group-hover/logo:opacity-90"
                   priority
-                  quality={100}
+                  quality={85}
                 />
               </div>
             </Link>
@@ -323,13 +323,13 @@ export default function Header() {
             >
               <div className="relative h-[32px] w-[98px]">
                 <Image
-                  src="/images/Logo.png"
+                  src="/images/Logo.webp"
                   alt="Q-DAS Global logo"
                   fill
                   sizes="98px"
                   className="object-contain"
                   priority
-                  quality={100}
+                  quality={85}
                 />
               </div>
             </Link>
